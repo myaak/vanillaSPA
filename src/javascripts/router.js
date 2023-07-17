@@ -3,7 +3,7 @@ import { locationChangeEvent } from "./events/event.js";
 const routesPath = "/static/views";
 
 const routes = {
-  error: "",
+  error: `${routesPath}/error.html`,
   "/activity": `${routesPath}/activity.html`,
   "/map": `${routesPath}/map.html`,
   "/timer": `${routesPath}/timer.html`
@@ -11,7 +11,7 @@ const routes = {
 const route = (event) => {
   event = event || window.event;
   event.preventDefault();
-  window.history.pushState({}, "", event.target.href);
+  window.history.pushState({}, "", event.currentTarget.href);
   switchLocation();
 };
 
@@ -38,6 +38,9 @@ const goBack = (event) => {
 };
 
 document.getElementById("back-arrow").addEventListener("click", goBack);
+document.querySelectorAll(".header-bottom-left-item").forEach((item) => {
+  item.addEventListener("click", route);
+});
 
 window.onpopstate = switchLocation;
 window.route = route;
